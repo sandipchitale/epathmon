@@ -5,9 +5,8 @@ html,body {
 body {
   padding-top: 50px;
   padding-bottom: 50px;
-  color: #333;
+  color: black;
   background-color: white;
-  overflow: scroll;
 }
 
 .wrapper {
@@ -25,6 +24,8 @@ body {
 .content {
   display: flex;
   flex: 1;
+  height: 400px;
+  overflow-y: auto;
 }
 
 .wait {
@@ -46,9 +47,4 @@ body {
 .no-drag {
   -webkit-app-region: no-drag;
   cursor: pointer;
-}
-
-textarea.nowrap {
-  width: 100%;
-  white-space: nowrap;
 }
