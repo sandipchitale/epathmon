@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html ng-app="EpathmonApp">
+  <head>
+    <meta charset="UTF-8">
+    <title>pathmon</title>
+    <link href="node_modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/epathmon.css" rel="stylesheet">
+  </head>
+  <body ng-controller="EpathmonCtrl as vm">
+    <nav class="navbar navbar-inverse navbar-fixed-top" title="Drag to move the window">
+      <div class="container movable drag">
+        <div class="row">
+          <div class="navbar-header col-xs-6">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+              <span class="sr-only">Toggle navigation</span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            </button>
+            <span class="navbar-brand no-drag">Pathmon</span>
+          </div>
+          <div id="navbar" class="navbar-collapse collapse col-xs-6 pull-right">
+            <ul class="nav navbar-nav">
+              <li class="no-drag"><a href="https://github.com/sandipchitale/epathmon/" target="blank" title="Github"><img src="images/github.png"></img></a></li>
+              <li class="no-drag"><button class="btn btn-link navbar-btn" ng-click="vm.quit()"><i class="glyphicon glyphicon-remove-circle"></i></button></li>
+            </ul>
+          </div>
+        </div>
+      <div>
+    </nav>
+    <br/>
+    <div class="wrapper">
+        <div class="container" ng-class="{'wait': vm.wait}">
+          <div class="row">
+            <div class="col-xs-10">
+              <form class="form-inline">
+                <div class="form-group">
+                  <label for="path">Path:</label>
+                  <input type="text" class="form-control" ng-model="vm.path" size="60" id="path" placeholder="Enter or Browse to select path to add">
+                </div>
+              <form>
+            </div>
+            <div class="col-xs-2 text-right">
+              <button class="btn btn-sm" ng-click="vm.browse()"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+              &nbsp;
+              <button class="btn btn-sm btn-primary" ng-disabled="vm.path === ''" ng-click="vm.handle()"><i class="glyphicon glyphicon-refresh"></i></button>
+            </div>
+          </div>
+          <br/>
+          <div class="row content">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="col-xs-1 text-right">PID</th>
+                  <th class="col-xs-3">Process</th>
+                  <th class="col-xs-7">Path</th>
+                  <th class="col-xs-1 text-center">
+                    <button class="btn btn-sm btn-danger" ng-click="vm.killAllProcesses()">
+                      <i class="glyphicon glyphicon-remove"></i><i class="glyphicon glyphicon-remove"></i>
+                    </button>
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="monospace" ng-repeat="handle in vm.handles | orderBy:vm.orderByPath track by $index">
+                  <td class="text-right"><strong>{{handle.pid}}</strong></td>
+                  <td>{{handle.process}}</td>
+                  <td>{{handle.path}}</td>
+                  <td class="text-right">
+                    <button class="btn btn-sm" ng-click="vm.killProcess(handle.pid)"><i class="glyphicon glyphicon-remove"></i></button>
+                  </td>
+                </tr>
+              <tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    <nav class="navbar navbar-inverse navbar-fixed-bottom">
+      <div class="container">
+        <p class="navbar-text pull-right">&copy; Pathmon &middot; Sandip Chitale</p>
+      </div>
+    </nav>
+
+    <script>
+      window.$ = window.jQuery = require('./node_modules/jquery/dist/jquery.js');
+    </script>
+    <script src="node_modules/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="node_modules/angular/angular.min.js"></script>
+    <script src="js/epathmon.js"></script>
+  </body>
+</html>

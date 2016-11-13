@@ -1,0 +1,33 @@
+{
+  "name": "pathmon",
+  "version": "1.0.0",
+  "description": "A simple tool to display processes which have files open in a filesystem subtree and kill the processes.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron main.js",
+    "package:win": "electron-packager . \"epathmon\" --overwrite --out=dist/win --platform=win32 --arch=all --icon=ico/epathmon.ico --version-string.CompanyName=\"Sandip Chitale\" --version-string.ProductName=\"epathmon\" --version-string.FileDescription=\"epathmon\" --asar.unpackDir=js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sandipchitale/epathmon.git"
+  },
+  "keywords": [
+    "Electron",
+    "pathmon",
+    "netstat"
+  ],
+  "author": "Sandip Chitale",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/sandipchitale/epathmon/issues"
+  },
+  "homepage": "https://github.com/sandipchitale/epathmon/#readme",
+  "devDependencies": {
+    "electron-prebuilt": "^1.4.6"
+  },
+  "dependencies": {
+    "angular": "^1.5.5",
+    "bootstrap": "^3.3.6",
+    "jquery": "^2.2.3"
+  }
+}

@@ -1,0 +1,54 @@
+html,body {
+  height: 100%;
+}
+
+body {
+  padding-top: 50px;
+  padding-bottom: 50px;
+  color: #333;
+  background-color: white;
+  overflow: scroll;
+}
+
+.wrapper {
+  display: flex;
+    flex-direction: column;
+
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    align-items: stretch;
+    align-content: stretch;
+
+    height: 100%;
+}
+
+.content {
+  display: flex;
+  flex: 1;
+}
+
+.wait {
+  cursor: wait;
+}
+
+.monospace {
+  font-family: 'Courier New', 'monospace';
+}
+
+.movable {
+  cursor: move !important;
+}
+
+.drag {
+  -webkit-app-region: drag;
+}
+
+.no-drag {
+  -webkit-app-region: no-drag;
+  cursor: pointer;
+}
+
+textarea.nowrap {
+  width: 100%;
+  white-space: nowrap;
+}
