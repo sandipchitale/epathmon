@@ -78,6 +78,7 @@
         $scope.$apply(function() {
           if (angular.isArray(fileNames) && fileNames.length === 1) {
             vm.path = fileNames[0];
+            handle();
           }
         });
       });
@@ -125,8 +126,7 @@
                       seenPIDs.push(groups[2]);
                       vm.handles.push({
                         'pid': groups[2],
-                        'process': groups[1],
-                        'path' : groups[3]
+                        'process': groups[1]
                       });
                     }
                   }
@@ -135,6 +135,10 @@
             });
           }
         });
+      } else {
+        if (vm.path === '') {
+          vm.handles = [];
+        }
       }
     }
     vm.handle = handle;

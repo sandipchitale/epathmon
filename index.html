@@ -43,7 +43,7 @@
             <div class="col-xs-2 text-right">
               <button class="btn btn-sm" ng-click="vm.browse()"><i class="glyphicon glyphicon-option-horizontal"></i></button>
               &nbsp;
-              <button class="btn btn-sm btn-primary" ng-disabled="vm.path === ''" ng-click="vm.handle()"><i class="glyphicon glyphicon-refresh"></i></button>
+              <button class="btn btn-sm btn-primary" ng-click="vm.handle()" title="Kill all processes..."><i class="glyphicon glyphicon-refresh"></i></button>
             </div>
           </div>
           <br/>
@@ -51,11 +51,10 @@
             <table class="table">
               <thead>
                 <tr>
-                  <th class="col-xs-1 text-right">PID</th>
-                  <th class="col-xs-3">Process</th>
-                  <th class="col-xs-7">Path</th>
+                  <th class="col-xs-2 text-right">PID</th>
+                  <th class="col-xs-9">Process</th>
                   <th class="col-xs-1 text-center">
-                    <button class="btn btn-sm btn-danger" ng-click="vm.killAllProcesses()">
+                    <button class="btn btn-sm btn-danger" ng-disabled="vm.handles.length === 0" ng-click="vm.killAllProcesses()">
                       <i class="glyphicon glyphicon-remove"></i><i class="glyphicon glyphicon-remove"></i>
                     </button>
                   </th>
@@ -65,9 +64,8 @@
                 <tr class="monospace" ng-repeat="handle in vm.handles | orderBy:vm.orderByPath track by $index">
                   <td class="text-right"><strong>{{handle.pid}}</strong></td>
                   <td>{{handle.process}}</td>
-                  <td>{{handle.path}}</td>
-                  <td class="text-right">
-                    <button class="btn btn-sm" ng-click="vm.killProcess(handle.pid)"><i class="glyphicon glyphicon-remove"></i></button>
+                  <td class="text-center">
+                    <button class="btn btn-sm" ng-disabled="vm.handles.length === 0" ng-click="vm.killProcess(handle.pid)" title="Kill all process {{handle.pid}}..."><i class="glyphicon glyphicon-remove"></i></button>
                   </td>
                 </tr>
               <tbody>
