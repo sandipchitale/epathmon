@@ -26,7 +26,7 @@
 
   angular
   .module('EpathmonApp', [])
-  .controller('EpathmonCtrl', ['$scope', '$window', '$log', function($scope, $window, $log){
+  .controller('EpathmonCtrl', ['$scope', '$window', '$log', '$timeout', function($scope, $window, $log, $timeout){
     var vm = this, handleExe;
 
     handleExe = path.join(__dirname, '..', 'app.asar.unpacked', 'js', 'handle.exe');
@@ -39,16 +39,34 @@
     vm.path = '';
     vm.handles = [];
 
-    vm.orderByPath = function(handle) {
+    vm.orderByPID = function(handle) {
       return parseInt(handle.pid);
     }
 
-    vm.killProcess = function(PID) {
+    vm.killAllProcesses = function() {
+      var confirmPrompt = 'Kill the following PIDs:\n\n';
+      var PIDs = [];
+      angular.forEach(vm.handles, function(handle) {
+        PIDs.push(handle.pid);
+      });
+      confirmPrompt += PIDs.join(', ');
+      confirmPrompt += "\n\nAre you very very sure ?";
+      if ($window.confirm(confirmPrompt)) {
+        // actually kill
+        $log.info('Killing processes: ' + PIDs.join(', '));
+        angular.forEach(PIDs, function(PID) {
+          vm.killProcess(PID, true);
+        });
+      }
+    }
+
+    var tid;
+    vm.killProcess = function(PID, bulk) {
       if (angular.isString(PID)) {
         PID = parseInt(PID);
       }
       if (angular.isNumber(PID)) {
-        if ($window.confirm('Kill process: ' + PID)) {
+        if (bulk || $window.confirm('Kill process: ' + PID)) {
           $log.info('Killing process: ' + PID);
           const kp = (process.platform === 'win32') ?
             spawn('taskkill', ['/F', '/PID', '' + PID]) : spawn('kill', ['-9', '' + PID]);
@@ -57,12 +75,19 @@
           });
 
           kp.stderr.on('data', (err) => {
-            $log.debug(err);
+            $log.error(String.fromCharCode.apply(null, err));
           });
 
           kp.on('close', (code) => {
             $log.debug('Exit code: ' + code);
-            netstat();
+            if (angular.isDefined(tid)) {
+              $timeout.cancel(tid);
+              tid = undefined;
+            }
+            tid = $timeout(function() {
+              handle();
+              tid = undefined;
+            }, 1000);
           });
         }
       }
@@ -104,7 +129,7 @@
         });
 
         h.stderr.on('data', (err) => {
-          $log.error(err);
+          $log.error(String.fromCharCode.apply(null, err));
         });
 
         h.on('close', (code) => {

@@ -24,8 +24,7 @@ body {
 .content {
   display: flex;
   flex: 1;
-  height: 400px;
-  overflow-y: auto;
+  height: auto;
 }
 
 .wait {

@@ -31,41 +31,41 @@
     <br/>
     <div class="wrapper">
         <div class="container" ng-class="{'wait': vm.wait}">
-          <div class="row">
-            <div class="col-xs-11">
-              <form class="form-inline">
-                <div class="form-group">
-                  <label for="path">Path:</label>
-                  <input type="text" class="form-control" ng-model="vm.path" size="80" id="path" placeholder="Enter or Browse to select path to add">
-                </div>
-              <form>
-            </div>
-            <div class="col-xs-1 text-right">
-              <button class="btn btn-sm" ng-click="vm.browse()"><i class="glyphicon glyphicon-option-horizontal"></i></button>
-            </div>
-          </div>
-          <br/>
           <div class="row content">
             <table class="table table-hover">
               <thead>
                 <tr>
+                  <th class="col-xs-8">
+                    <form class="form-inline">
+                      <div class="form-group">
+                        <label for="path">Process for path:</label>
+                        <div class="input-group">
+                          <input type="text" class="form-control" ng-model="vm.path" size="30" id="path" placeholder="Enter or Browse to select path to add">
+                          <span class="input-group-btn">
+                            <button class="btn btn-default" ng-click="vm.browse()"><i class="glyphicon glyphicon-option-horizontal"></i></button>
+                          </span>
+                        </div>
+                      </div>
+                    <form>
+                  </th>
                   <th class="col-xs-2 text-right">PIDs ({{vm.handles.length}})</th>
-                  <th class="col-xs-8">Process</th>
                   <th class="col-xs-2 text-right">
-                    <button class="btn btn-sm btn-primary" ng-click="vm.handle()" title="Kill all processes..."><i class="glyphicon glyphicon-refresh"></i></button>
+                    <button class="btn btn-sm btn-primary" ng-click="vm.handle()"><i class="glyphicon glyphicon-refresh"></i></button>
                     &nbsp;
-                    <button class="btn btn-sm btn-danger" ng-disabled="vm.handles.length === 0" ng-click="vm.killAllProcesses()">
-                      <i class="glyphicon glyphicon-remove"></i><i class="glyphicon glyphicon-remove"></i>
+                    <button class="btn btn-sm btn-danger" ng-disabled="vm.handles.length === 0" ng-click="vm.killAllProcesses()" title="Kill all processes...">
+                      <i class="glyphicon glyphicon-remove"></i>
                     </button>
                   </th>
                 </tr>
               </thead>
               <tbody>
-                <tr class="monospace" ng-repeat="handle in vm.handles | orderBy:vm.orderByPath track by $index">
-                  <td class="text-right"><strong>{{handle.pid}}</strong></td>
+                <tr class="monospace" ng-repeat="handle in vm.handles | orderBy:vm.orderByPID track by $index">
                   <td>{{handle.process}}</td>
+                  <td class="text-right"><strong>{{handle.pid}}</strong></td>
                   <td class="text-right">
-                    <button class="btn btn-sm" ng-disabled="vm.handles.length === 0" ng-click="vm.killProcess(handle.pid)" title="Kill all process {{handle.pid}}..."><i class="glyphicon glyphicon-remove"></i></button>
+                    <button class="btn btn-sm" ng-disabled="vm.handles.length === 0" ng-click="vm.killProcess(handle.pid)" title="Kill process {{handle.pid}}...">
+                      <i class="glyphicon glyphicon-remove"></i>
+                    </button>
                   </td>
                 </tr>
               <tbody>
