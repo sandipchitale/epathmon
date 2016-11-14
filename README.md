@@ -2,9 +2,9 @@
 
 Pathmon is a simple electron based Path monitor (for windows only). On windows, this uses Microsoft Sysinternals utility handle.exe utility which needs to run as Administrator.
 
-## Blog
+## Screenshot
 
-[Pathmon]()
+![Pathmon](Pathmon.png)
 
 ## Using Pathmon
 
